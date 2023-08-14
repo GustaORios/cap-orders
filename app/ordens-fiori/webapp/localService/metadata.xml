@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="MainService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Orders" EntityType="MainService.Orders">
+                    <NavigationPropertyBinding Path="OrdersDetails" Target="OrdersDetails"/>
+                </EntitySet>
+                <EntitySet Name="OrdersDetails" EntityType="MainService.OrdersDetails">
+                    <NavigationPropertyBinding Path="Order" Target="Orders"/>
+                    <NavigationPropertyBinding Path="Prdocuts" Target="Products"/>
+                </EntitySet>
+                <EntitySet Name="Products" EntityType="MainService.Products">
+                    <NavigationPropertyBinding Path="OrdersDetails" Target="OrdersDetails"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Orders">
+                <Key>
+                    <PropertyRef Name="OrderID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="OrderID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="RequiredDate" Type="Edm.DateTimeOffset"/>
+                <Property Name="ShippedDate" Type="Edm.DateTimeOffset"/>
+                <Property Name="Freight" Type="Edm.Decimal" Scale="variable"/>
+                <Property Name="ShipName" Type="Edm.String"/>
+                <Property Name="ShipCountry" Type="Edm.String"/>
+                <NavigationProperty Name="OrdersDetails" Type="Collection(MainService.OrdersDetails)" Partner="Order"/>
+            </EntityType>
+            <EntityType Name="OrdersDetails">
+                <Key>
+                    <PropertyRef Name="OrderID"/>
+                    <PropertyRef Name="ProductID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="OrderID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="ProductID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="UnitPrice" Type="Edm.Decimal" Scale="variable"/>
+                <Property Name="Quantity" Type="Edm.Int32"/>
+                <Property Name="Discount" Type="Edm.String"/>
+                <NavigationProperty Name="Order" Type="MainService.Orders" Partner="OrdersDetails">
+                    <ReferentialConstraint Property="Order_OrderID" ReferencedProperty="OrderID"/>
+                </NavigationProperty>
+                <Property Name="Order_OrderID" Type="Edm.Guid"/>
+                <NavigationProperty Name="Prdocuts" Type="Collection(MainService.Products)"/>
+            </EntityType>
+            <EntityType Name="Products">
+                <Key>
+                    <PropertyRef Name="ProductID"/>
+                </Key>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="ProductID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="ProductName" Type="Edm.String"/>
+                <Property Name="QuantityPerUnit" Type="Edm.String"/>
+                <Property Name="UnitPrice" Type="Edm.Decimal" Scale="variable"/>
+                <Property Name="UnitsInStock" Type="Edm.Int32"/>
+                <Property Name="UnitsOnOrder" Type="Edm.Int32"/>
+                <Property Name="Discontinued" Type="Edm.Boolean"/>
+                <NavigationProperty Name="OrdersDetails" Type="MainService.OrdersDetails">
+                    <ReferentialConstraint Property="OrdersDetails_OrderID" ReferencedProperty="OrderID"/>
+                    <ReferentialConstraint Property="OrdersDetails_ProductID" ReferencedProperty="ProductID"/>
+                </NavigationProperty>
+                <Property Name="OrdersDetails_OrderID" Type="Edm.Guid"/>
+                <Property Name="OrdersDetails_ProductID" Type="Edm.Guid"/>
+            </EntityType>
+            <Annotations Target="MainService.Orders/createdAt">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                </Annotations>
+                <Annotations Target="MainService.Orders/createdBy">
+                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                    <Annotation Term="Core.Immutable" Bool="true"/>
+                    <Annotation Term="Core.Computed" Bool="true"/>
+                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                        </Annotations>
+                        <Annotations Target="MainService.Orders/modifiedAt">
+                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                            <Annotation Term="Core.Computed" Bool="true"/>
+                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                            </Annotations>
+                            <Annotations Target="MainService.Orders/modifiedBy">
+                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                <Annotation Term="Core.Computed" Bool="true"/>
+                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                    </Annotations>
+                                    <Annotations Target="MainService.Orders/OrderID">
+                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                        <Annotation Term="Common.Label" String="Número da ordem"/>
+                                    </Annotations>
+                                    <Annotations Target="MainService.Orders/RequiredDate">
+                                        <Annotation Term="Common.Label" String="Data requerida"/>
+                                    </Annotations>
+                                    <Annotations Target="MainService.Orders/ShippedDate">
+                                        <Annotation Term="Common.Label" String="Data do envio"/>
+                                    </Annotations>
+                                    <Annotations Target="MainService.Orders/Freight">
+                                        <Annotation Term="Common.Label" String="Fretes"/>
+                                    </Annotations>
+                                    <Annotations Target="MainService.Orders/ShipName">
+                                        <Annotation Term="Common.Label" String="Nome do navio"/>
+                                    </Annotations>
+                                    <Annotations Target="MainService.Orders/ShipCountry">
+                                        <Annotation Term="Common.Label" String="País do navio"/>
+                                    </Annotations>
+                                    <Annotations Target="MainService.OrdersDetails/createdAt">
+                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                        <Annotation Term="Core.Immutable" Bool="true"/>
+                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                        </Annotations>
+                                        <Annotations Target="MainService.OrdersDetails/createdBy">
+                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                            <Annotation Term="Core.Immutable" Bool="true"/>
+                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                            <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                </Annotations>
+                                                <Annotations Target="MainService.OrdersDetails/modifiedAt">
+                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                    <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                    </Annotations>
+                                                    <Annotations Target="MainService.OrdersDetails/modifiedBy">
+                                                        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                            <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                            </Annotations>
+                                                            <Annotations Target="MainService.OrdersDetails/OrderID">
+                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                <Annotation Term="Common.Label" String="Número da ordem"/>
+                                                            </Annotations>
+                                                            <Annotations Target="MainService.OrdersDetails/ProductID">
+                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                <Annotation Term="Common.Label" String="Número do produto"/>
+                                                            </Annotations>
+                                                            <Annotations Target="MainService.OrdersDetails/UnitPrice">
+                                                                <Annotation Term="Common.Label" String="Preço por unidade"/>
+                                                            </Annotations>
+                                                            <Annotations Target="MainService.OrdersDetails/Quantity">
+                                                                <Annotation Term="Common.Label" String="Quantidade"/>
+                                                            </Annotations>
+                                                            <Annotations Target="MainService.OrdersDetails/Discount">
+                                                                <Annotation Term="Common.Label" String="Desconto"/>
+                                                            </Annotations>
+                                                            <Annotations Target="MainService.Products/createdAt">
+                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+                                                                </Annotations>
+                                                                <Annotations Target="MainService.Products/createdBy">
+                                                                    <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                    <Annotation Term="Core.Immutable" Bool="true"/>
+                                                                    <Annotation Term="Core.Computed" Bool="true"/>
+                                                                    <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+                                                                        </Annotations>
+                                                                        <Annotations Target="MainService.Products/modifiedAt">
+                                                                            <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                            <Annotation Term="Core.Computed" Bool="true"/>
+                                                                            <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+                                                                            </Annotations>
+                                                                            <Annotations Target="MainService.Products/modifiedBy">
+                                                                                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                                                                                <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+                                                                                    <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="MainService.Products/ProductID">
+                                                                                        <Annotation Term="Core.Computed" Bool="true"/>
+                                                                                        <Annotation Term="Common.Label" String="Número do produto"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="MainService.Products/ProductName">
+                                                                                        <Annotation Term="Common.Label" String="Nome do produto"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="MainService.Products/QuantityPerUnit">
+                                                                                        <Annotation Term="Common.Label" String="Quantidade por unidade"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="MainService.Products/UnitPrice">
+                                                                                        <Annotation Term="Common.Label" String="Preço por unidade"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="MainService.Products/UnitsInStock">
+                                                                                        <Annotation Term="Common.Label" String="Unidades no estoque"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="MainService.Products/UnitsOnOrder">
+                                                                                        <Annotation Term="Common.Label" String="Unidades na ordem"/>
+                                                                                    </Annotations>
+                                                                                    <Annotations Target="MainService.Products/Discontinued">
+                                                                                        <Annotation Term="Common.Label" String="Descontinuado?"/>
+                                                                                    </Annotations>
+                                                                                </Schema>
+                                                                            </edmx:DataServices>
+                                                                        </edmx:Edmx>

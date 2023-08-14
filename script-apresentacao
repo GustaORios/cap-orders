@@ -1,0 +1,6 @@
+1. Abrir o BAS
+2. Criar um Full stack application
+3. New project from template
+4. CAP Project (Basic sample files)
+5. Criar entidades via data-model.cds(sem o title)
+6. Expor as entidades via cat-service.cds

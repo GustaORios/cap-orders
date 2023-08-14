@@ -1,0 +1,67 @@
+// ORDERS
+###
+GET http://localhost:4004/odata/v4/main/Orders?$count=true&$filter=(IsActiveEntity%20eq%20false%20or%20SiblingEntity/IsActiveEntity%20eq%20null)&$select=Freight,HasActiveEntity,ID,IsActiveEntity,OrderID,OrderStatus,RequiredDate,ShipCountry,ShipName,ShippedDate&$skip=0&$top=30
+###
+
+POST http://localhost:4004/odata/v4/main/Orders
+Content-Type: application/json
+
+{
+    "OrderID": 777,
+    "RequiredDate": "2023-08-23T00:00:00Z",
+    "ShippedDate": "2023-08-10T00:00:00Z",
+    "Freight": 11.08,
+    "ShipName": "Barco Brazil",
+    "ShipCountry": "Brazil",
+    "OrderStatus": "Aprovação pendente",
+    "OrdersDetails": [
+        {
+          "OrderID": 777,
+          "ProductID": 11
+        }
+      ]
+}
+
+
+###
+POST http://localhost:4004/odata/v4/main/Orders(ID=591c2c9e-a179-4c95-aeed-da96f2000977,OrderID=77,IsActiveEntity=false)/OrdersDetails
+Content-Type: application/json
+
+{"OrderID":77,"ProductID":11}
+
+###
+GET http://localhost:4004/odata/v4/main/Orders(777)?$expand=OrdersDetails
+
+###
+DELETE http://localhost:4004/odata/v4/main/Orders(777)
+
+// ORDER DETAILS 
+###
+GET http://localhost:4004/odata/v4/main/OrdersDetails
+
+###
+POST http://localhost:4004/odata/v4/main/OrdersDetails
+Content-Type: application/json
+
+{ 
+          "OrderID": 777,
+          "ProductID": 7777,
+          "UnitPrice": 14,
+          "Quantity": 12,
+          "Discount": "0",
+          "Order_OrderID": 777
+}
+
+###
+DELETE  http://localhost:4004/odata/v4/main/OrdersDetails(777, 7777)
+Content-Type: application/json
+
+{ 
+          "OrderID": 777,
+          "ProductID": 7777,
+          "UnitPrice": 14,
+          "Quantity": 12,
+          "Discount": "0",
+          "Order_OrderID": 777
+}
+
