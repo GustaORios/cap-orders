@@ -1,0 +1,20 @@
+COLUMN TABLE my_orders_Products (
+  createdAt TIMESTAMP,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP,
+  modifiedBy NVARCHAR(255),
+  ID NVARCHAR(36) NOT NULL,
+  ProductID INTEGER NOT NULL,
+  ProductName NVARCHAR(5000),
+  QuantityPerUnit NVARCHAR(5000),
+  UnitPrice DECIMAL,
+  UnitsInStock INTEGER,
+  UnitsOnOrder INTEGER,
+  Discontinued BOOLEAN,
+  OrdersDetails_ID NVARCHAR(36),
+  OrdersDetails_OrderID INTEGER,
+  OrdersDetails_ProductID INTEGER,
+  PRIMARY KEY(ID, ProductID)
+) WITH ASSOCIATIONS (
+  MANY TO ONE JOIN my_orders_OrdersDetails AS OrdersDetails ON (OrdersDetails.ID = OrdersDetails_ID AND OrdersDetails.OrderID = OrdersDetails_OrderID AND OrdersDetails.ProductID = OrdersDetails_ProductID)
+)

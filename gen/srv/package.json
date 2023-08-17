@@ -1,0 +1,43 @@
+{
+  "name": "Ordens-cap",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^7",
+    "@sap/cds-hana": "^2",
+    "@sap/xssec": "^3.3.3",
+    "express": "^4",
+    "passport": "^0.6.0"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7",
+    "@sap/ux-specification": "^1.108.11",
+    "sqlite3": "^5.1.6"
+  },
+  "engines": {
+    "node": "^18"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "watch-ordens-fiori": "cds watch --open ordens-fiori/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "sapux": [
+    "app/ordens-fiori"
+  ],
+  "cds": {
+    "requires": {
+      "[production]": {
+        "db": {
+          "kind": "hana-cloud"
+        }
+      },
+      "db": {
+        "kind": "sql"
+      }
+    }
+  }
+}

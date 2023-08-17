@@ -1,6 +1,6 @@
 // ORDERS
 ###
-GET http://localhost:4004/odata/v4/main/Orders?$count=true&$filter=(IsActiveEntity%20eq%20false%20or%20SiblingEntity/IsActiveEntity%20eq%20null)&$select=Freight,HasActiveEntity,ID,IsActiveEntity,OrderID,OrderStatus,RequiredDate,ShipCountry,ShipName,ShippedDate&$skip=0&$top=30
+GET http://localhost:4004/odata/v4/main/Orders
 ###
 
 POST http://localhost:4004/odata/v4/main/Orders

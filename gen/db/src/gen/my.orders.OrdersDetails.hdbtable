@@ -1,0 +1,18 @@
+COLUMN TABLE my_orders_OrdersDetails (
+  createdAt TIMESTAMP,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP,
+  modifiedBy NVARCHAR(255),
+  ID NVARCHAR(36) NOT NULL,
+  OrderID INTEGER NOT NULL,
+  ProductID INTEGER NOT NULL,
+  UnitPrice DECIMAL,
+  Quantity INTEGER,
+  Discount NVARCHAR(5000),
+  Order_ID NVARCHAR(36),
+  Order_OrderID INTEGER,
+  PRIMARY KEY(ID, OrderID, ProductID)
+) WITH ASSOCIATIONS (
+  MANY TO ONE JOIN my_orders_Orders AS "ORDER" ON ("ORDER".ID = Order_ID AND "ORDER".OrderID = Order_OrderID),
+  MANY TO MANY JOIN my_orders_Products AS Prdocuts ON (Prdocuts.ProductID = ProductID)
+)

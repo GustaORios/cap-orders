@@ -1,0 +1,17 @@
+COLUMN TABLE my_orders_Orders (
+  createdAt TIMESTAMP,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP,
+  modifiedBy NVARCHAR(255),
+  ID NVARCHAR(36) NOT NULL,
+  OrderID INTEGER NOT NULL,
+  RequiredDate SECONDDATE,
+  ShippedDate SECONDDATE,
+  Freight DECIMAL,
+  ShipName NVARCHAR(5000),
+  ShipCountry NVARCHAR(5000),
+  OrderStatus NVARCHAR(5000),
+  PRIMARY KEY(ID, OrderID)
+) WITH ASSOCIATIONS (
+  MANY TO MANY JOIN my_orders_OrdersDetails AS OrdersDetails ON (OrdersDetails.OrderID = OrderID)
+)

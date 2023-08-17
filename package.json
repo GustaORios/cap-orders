@@ -7,12 +7,19 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^7",
-    "express": "^4"
+    "@sap/cds-hana": "^2",
+    "@sap/xssec": "^3.3.3",
+    "express": "^4",
+    "passport": "^0.6.0"
   },
   "devDependencies": {
     "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7",
     "@sap/ux-specification": "^1.108.11",
     "sqlite3": "^5.1.6"
+  },
+  "engines": {
+    "node": "^18"
   },
   "scripts": {
     "start": "cds-serve",
@@ -20,5 +27,17 @@
   },
   "sapux": [
     "app/ordens-fiori"
-  ]
+  ],
+  "cds": {
+    "requires": {
+      "[production]": {
+        "db": {
+          "kind": "hana-cloud"
+        }
+      },
+      "db": {
+        "kind": "sql"
+      }
+    }
+  }
 }

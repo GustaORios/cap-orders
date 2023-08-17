@@ -1,0 +1,17 @@
+VIEW MainService_Orders AS SELECT
+  Orders_0.createdAt,
+  Orders_0.createdBy,
+  Orders_0.modifiedAt,
+  Orders_0.modifiedBy,
+  Orders_0.ID,
+  Orders_0.OrderID,
+  Orders_0.RequiredDate,
+  Orders_0.ShippedDate,
+  Orders_0.Freight,
+  Orders_0.ShipName,
+  Orders_0.ShipCountry,
+  Orders_0.OrderStatus
+FROM my_orders_Orders AS Orders_0
+WITH ASSOCIATIONS (
+  MANY TO MANY JOIN MainService_OrdersDetails AS OrdersDetails ON (OrdersDetails.OrderID = OrderID)
+)

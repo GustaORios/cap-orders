@@ -1,0 +1,18 @@
+VIEW MainService_OrdersDetails AS SELECT
+  OrdersDetails_0.createdAt,
+  OrdersDetails_0.createdBy,
+  OrdersDetails_0.modifiedAt,
+  OrdersDetails_0.modifiedBy,
+  OrdersDetails_0.ID,
+  OrdersDetails_0.OrderID,
+  OrdersDetails_0.ProductID,
+  OrdersDetails_0.UnitPrice,
+  OrdersDetails_0.Quantity,
+  OrdersDetails_0.Discount,
+  OrdersDetails_0.Order_ID,
+  OrdersDetails_0.Order_OrderID
+FROM my_orders_OrdersDetails AS OrdersDetails_0
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN MainService_Orders AS "ORDER" ON ("ORDER".ID = Order_ID AND "ORDER".OrderID = Order_OrderID),
+  MANY TO MANY JOIN MainService_Products AS Prdocuts ON (Prdocuts.ProductID = ProductID)
+)
